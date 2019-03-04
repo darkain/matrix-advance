@@ -1,0 +1,1037 @@
+/*************************  MATRIX ADVANCE  ****************************\
+*  Copyright (c) 2005 Vincent E. Milum Jr., All rights reserved.        *
+*                                                                       *
+*  See License.txt for more information                                 *
+*                                                                       *
+*  Latest Source versions can be found at:  HTTP://WWW.DARKAIN.COM/     *
+\***********************************************************************/
+
+
+#ifndef _THUMB_
+
+#include <vArm/vGBA.h>
+#include <vArm/gbaInlines.h>
+//#include "engine.h"
+#include "../resources.h"
+
+
+
+static u32 ptr2 asm("ptr2");
+static u32 color1 asm("color1");
+static u32 color2 asm("color2");
+static u32 color3 asm("color3");
+static u32 color4 asm("color4");
+static u32 color5 asm("color5");
+static u32 color6 asm("color6");
+static u32 black asm("black");
+
+
+void IWRAM_CODE paintTile(u16 *ptr, u8 baseColor) {
+	const u16 *colors = matrixPalette + ((baseColor)*6);
+	color1 = colors[1] | (colors[1] << 16);
+	color2 = colors[2] | (colors[2] << 16);
+	color3 = colors[3] | (colors[3] << 16);
+	color4 = colors[4] | (colors[4] << 16);
+	color5 = colors[5] | (colors[5] << 16);
+	color6 = colors[6] | (colors[6] << 16);
+	ptr2 = (u32)ptr;
+
+	__asm (
+    //setup
+		"ldr r0, =ptr2\n"
+		"ldr r0, [r0]\n"
+		"ldr r1, =color1\n"
+		"ldr r1, [r1]\n"
+		"ldr r2, =color2\n"
+		"ldr r2, [r2]\n"
+		"ldr r3, =color3\n"
+		"ldr r3, [r3]\n"
+		"ldr r4, =color4\n"
+		"ldr r4, [r4]\n"
+		"ldr r5, =color5\n"
+		"ldr r5, [r5]\n"
+		"ldr r6, =color6\n"
+		"ldr r6, [r6]\n"
+
+		
+		//row 1
+		"add r0, r0, #8\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 2
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 3
+		"add r0, r0, #255\n"
+		"add r0, r0, #213\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 4
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+
+		//row 5
+		"add r0, r0, #255\n"
+		"add r0, r0, #205\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+
+		//row 6
+		"add r0, r0, #255\n"
+		"add r0, r0, #205\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+
+		//row 7
+		"add r0, r0, #255\n"
+		"add r0, r0, #205\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		
+		//row 8
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+		//row 9
+		"add r0, r0, #255\n"
+		"add r0, r0, #213\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+		//row 10
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+		:
+		: 
+		: "%r0", "%r1", "%r2", "%r3", "%r4", "%r5", "%r6"
+	);
+}
+
+
+//---------------------------------------------------------------------------------------------
+
+
+void IWRAM_CODE paintBlackTile(u16 *ptr) {
+	ptr2 = (u32) ptr;
+	black = 0;
+
+	__asm (
+    //setup
+		"ldr r0, =ptr2\n"
+		"ldr r0, [r0]\n"
+		"ldr r1, =black\n"
+		"ldr r1, [r1]\n"
+
+		//row 1
+		"add r0, r0, #8\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 2
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 3
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 4
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 5
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 6
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 7
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		
+		//row 8
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 9
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		//row 10
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+
+		:
+		: "r" (ptr), "r" (0)
+		: "r0", "r1"
+	);
+}
+
+
+//---------------------------------------------------------------------------------------------
+
+
+void IWRAM_CODE paintFlip1(u16 *ptr, u8 baseColor) {
+	const u16 *colors = matrixPalette + ((baseColor)*6);
+	color1 = colors[1] | (colors[1] << 16);
+	color2 = colors[2] | (colors[2] << 16);
+	color3 = colors[3] | (colors[3] << 16);
+	color4 = colors[4] | (colors[4] << 16);
+	color5 = colors[5] | (colors[5] << 16);
+	color6 = colors[6] | (colors[6] << 16);
+	black = 0;
+
+	ptr2 = (u32) ptr;
+
+	__asm (
+		"ldr r0, =ptr2\n"
+		"ldr r0, [r0]\n"
+		"ldr r1, =color1\n"
+		"ldr r1, [r1]\n"
+		"ldr r2, =color2\n"
+		"ldr r2, [r2]\n"
+		"ldr r3, =color3\n"
+		"ldr r3, [r3]\n"
+		"ldr r4, =color4\n"
+		"ldr r4, [r4]\n"
+		"ldr r5, =color5\n"
+		"ldr r5, [r5]\n"
+		"ldr r6, =color6\n"
+		"ldr r6, [r6]\n"
+		"ldr r7, =black\n"
+		"ldr r7, [r7]\n"
+		
+		//row 1
+		"add r0, r0, #8\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 2
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 3
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 4
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 5
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 6
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 7
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		
+		//row 8
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 9
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+		//row 10
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+    :
+		:
+		: "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7"
+	);
+}
+
+
+//---------------------------------------------------------------------------------------------
+
+
+void IWRAM_CODE paintFlip3(u16 *ptr, u8 baseColor) {
+	const u16 *colors = matrixPalette + ((baseColor)*6);
+	color1 = colors[1] | (colors[1] << 16);
+	color2 = colors[2] | (colors[2] << 16);
+	color3 = colors[3] | (colors[3] << 16);
+	color4 = colors[4] | (colors[4] << 16);
+	color5 = colors[5] | (colors[5] << 16);
+	color6 = colors[6] | (colors[6] << 16);
+	black = 0;
+
+	ptr2 = (u32) ptr;
+
+	__asm (
+		"ldr r0, =ptr2\n"
+		"ldr r0, [r0]\n"
+		"ldr r1, =color1\n"
+		"ldr r1, [r1]\n"
+		"ldr r2, =color2\n"
+		"ldr r2, [r2]\n"
+		"ldr r3, =color3\n"
+		"ldr r3, [r3]\n"
+		"ldr r4, =color4\n"
+		"ldr r4, [r4]\n"
+		"ldr r5, =color5\n"
+		"ldr r5, [r5]\n"
+		"ldr r6, =color6\n"
+		"ldr r6, [r6]\n"
+		"ldr r7, =black\n"
+		"ldr r7, [r7]\n"
+		
+		//row 1
+		"add r0, r0, #8\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 2
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 3
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 4
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 5
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 6
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 7
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		
+		//row 8
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 9
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 10
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+    :
+		:
+		: "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7"
+	);
+}
+
+
+//---------------------------------------------------------------------------------------------
+
+
+void IWRAM_CODE paintFlip2(u16 *ptr, u8 basecolor1, u8 basecolor2) {
+	const u16 *colors = matrixPalette + ((basecolor1)*6);
+	color1 = colors[1] | (colors[1] << 16);
+	color2 = colors[2] | (colors[2] << 16);
+	color3 = colors[3] | (colors[3] << 16);
+	
+	colors = matrixPalette + ((basecolor2)*6);
+	color4 = colors[4] | (colors[4] << 16);
+	color5 = colors[5] | (colors[5] << 16);
+	color6 = colors[6] | (colors[6] << 16);
+	black = 0;
+
+	ptr2 = (u32) ptr;
+
+	__asm (
+		"ldr r0, =ptr2\n"
+		"ldr r0, [r0]\n"
+		"ldr r1, =color1\n"
+		"ldr r1, [r1]\n"
+		"ldr r2, =color2\n"
+		"ldr r2, [r2]\n"
+		"ldr r3, =color3\n"
+		"ldr r3, [r3]\n"
+		"ldr r4, =color4\n"
+		"ldr r4, [r4]\n"
+		"ldr r5, =color5\n"
+		"ldr r5, [r5]\n"
+		"ldr r6, =color6\n"
+		"ldr r6, [r6]\n"
+		"ldr r7, =black\n"
+		"ldr r7, [r7]\n"
+		
+		//row 1
+		"add r0, r0, #8\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+
+		//row 2
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 3
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 4
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r1, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r6, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 5
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 6
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 7
+		"add r0, r0, #255\n"
+		"add r0, r0, #207\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r2, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r5, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		
+		//row 8
+		"add r0, r0, #255\n"
+		"add r0, r0, #209\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 9
+		"add r0, r0, #255\n"
+		"add r0, r0, #215\n"
+		"strh r7, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r7, [r0]\n"
+
+		//row 10
+		"add r0, r0, #255\n"
+		"add r0, r0, #221\n"
+		"strh r3, [r0]\n"
+		"add r0, r0, #2\n"
+		"strh r4, [r0]\n"
+
+		:
+		:
+		: "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7"
+	);
+}
+
+
+#endif

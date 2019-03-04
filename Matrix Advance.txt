@@ -1,0 +1,64 @@
+switch counts as a combo x1
+
+
+Last Updated: 1pm PST - 9/14/2003
+
+Matrix Advance!!
+a hexagon based puzzle game
+
+
+Game Modes
+----------------------
+1) Play Now
+2) Time Attack
+3) Puzzle Mode
+
+
+Play Now
+----------------------
+This mode is the exact same as Time Attack, with the minor change of have a name and character chosen for you.
+
+
+Time Attack
+----------------------
+The object of this mode is to get the highest score possible within the timeframe provided. Make clusters to increase your score! 
+
+
+Puzzle Mode
+----------------------
+In this mode, you have to solve pre-made puzzles. You have a limited amount of moves you can preform in this mode. A move is counted as any Gem Switching action, or Gem Flipping action. One small change in gameplay in this mode is that when the time runs out on a Linker, it becomes a black gem, instead of remaining its current colour, however, this only happens on the Active Side of the board. Also, there is no time limit in this mode.
+
+
+Boards
+----------------------
+There is both an ACTIVE and PASSIVE board. The object of the game is to combine "Clusters" of 5 or more of the same "Gem" together. This can only be done on the Active side of the board, although you do control both at the same time.
+
+
+Buttons
+----------------------
+A: Switching Gems
+B: Flipping Gems
+A: Linkers
+
+
+Switching Gems
+----------------------
+By holding down the "A" button, you can switch the location of two gems that are next to each other. Although there are gems on all six sides, you may only move in one of four directions. These directions are indicated by little white dots around the cursor. At the same time, this will also move the gems in the same location on the Passive board. When you create a Cluster, the gem you switched to create the Cluster then becomes a Linker. Linkers are discussed more in detail later.
+
+
+Flipping Gems
+----------------------
+You can press the "B" button to flip a gem with the gem in the same location on the passive board. This is nice for where you may want to try to line up combos or other things, but this will be discussed more later.
+
+
+Linkers
+----------------------
+Linkers are the main gem within a cluster, and can still be moved around outside of the cluster. You can then use this gem to create other clusters on other areas of the board. Linkers cannot be flipped.
+
+
+Combo
+----------------------
+A combo is any cluster formed without the direct activation of the player. The way combos are formed is once you make a cluster, it will flip over games in its place, and those gems may cause another cluster. This second cluster is a Combo. You can get as many combos in a row off of one original cluster as the board will allow. What this means is that you should watch the passive board and line up the gems to form clusters.
+
+
+(more to come later) 
